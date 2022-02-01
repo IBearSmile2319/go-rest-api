@@ -1,5 +1,9 @@
  #  # GO-REST-API  <img src="https://i.pinimg.com/originals/e4/97/e9/e497e9cfa0c8d4c0bfd78c2c508c6f09.gif" width="50">    
----
+
+## Running Postgres Locally with Docker
+```sh
+$ docker run --name some-postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
+```
 ## Available Scripts local
 
 first we configure the variables for the connection to the postgres database.
