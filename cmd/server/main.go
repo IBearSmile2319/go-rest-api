@@ -1,21 +1,30 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/IBearSmile2319/go-rest-api/internal/comment"
 	"github.com/IBearSmile2319/go-rest-api/internal/database"
 	transportHTTP "github.com/IBearSmile2319/go-rest-api/internal/transport/http"
+
+	log "github.com/sirupsen/logrus"
 )
 
-// App - the struct which contains things like the pinters
-// to database connections
-type App struct{}
+// App - contain application information
+type App struct {
+	Name    string
+	Version string
+}
 
 // Run - sets up our application
 func (app *App) Run() error {
-	fmt.Println("Setting UP our server")
+	log.SetFormatter(&log.JSONFormatter{})
+	log.WithFields(
+		log.Fields{
+			"AppName": app.Name,
+			"Version": app.Version,
+		}).Info("Starting up our server")
+	// fmt.Println("Setting UP our server")
 	var err error
 	db, err := database.NewDatabase()
 	if err != nil {
@@ -31,17 +40,19 @@ func (app *App) Run() error {
 	handler := transportHTTP.NewHandler(commentService)
 	handler.SetupRoutes()
 	if err := http.ListenAndServe(":8080", handler.Router); err != nil {
-		fmt.Println("Failed to set up server")
+		log.Error("Failed to set up server")
 		return err
 	}
 	return nil
 }
 
 func main() {
-	fmt.Println("Go Rest Api Server")
-	app := App{}
+	app := App{
+		Name:    "Go Rest Api Server",
+		Version: "0.0.1",
+	}
 	if err := app.Run(); err != nil {
-		fmt.Println("Error starting up our server")
-		fmt.Println(err)
+		log.Error("Error starting up our server")
+		log.Fatal(err)
 	}
 }
