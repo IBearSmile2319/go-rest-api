@@ -13,6 +13,8 @@ $ export DB_USERNAME=postgres
 $ export DB_PASSWORD=postgres
 $ export DB_TABLE=postgres
 $ export DB_PORT=5432
+$ export DB_HOST=localhost
+$ export SSL_MODE=disable
 $ export DB_DB=postgres
 ```
 In the project directory, you can run:
@@ -22,7 +24,7 @@ In the project directory, you can run:
 ```sh
 $ go run cmd/server/main.go
 ```
-Open [http://localhost:8080/api/health] to view en Postman.
+Open [<a href="http://localhost:8080/api/health">http://localhost:8080/api/health</a>] to view en Postman.
 ____
 
 ## Containerizing our Go Apps with Docker
